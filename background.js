@@ -1,13 +1,15 @@
-function getPointsForFreeUse() {
-    var points = $('#ma-popu').find('span').text();
-    if (typeof points === 'undefined' || parseInt(points) > 5000 || parseInt(points) === 0)
-    {
-        $('#area-products').after("<div id='aubDesign'><img id='aubDesignTop' src='" + chrome.extension.getURL("search_top.png") + "'/><h2 id='aub'>" + chrome.i18n.getMessage('errorPoints') + "</h2><img id='aubDesignBot' src='" + chrome.extension.getURL("search_bot.png") + "'/></div>");
-        return false;
-    }
-    return true;
-}
+/**
+ * AdopteUnBot
+ * @version 1.0
+ * @author: Nicolas (@neodern) Jamet <neodern@gmail.com>
+ * @about: Visitez automatiquement des profils et gagnez de la popularité sur AdopteUnMec.
+ */
 
+
+/**
+ *
+ * @param personClass
+ */
 function goToProfil(personClass) {
     var image = chrome.extension.getURL("green-icon.png");
 
@@ -117,9 +119,7 @@ function buttonAubEvent() {
     $('#aubSearchRun').click(function(){
 
         $('#area-products').after("<div style='margin-top:10px;background-color:#191919;'><img style='margin-top:-2px;' src='" + chrome.extension.getURL("search_top.png") + "'/><h2 id='aub' style='margin-top:10px;text-align:center;border:none;font-family: Novecento Narrow Demibold;color:white;font-size:14px;padding:5px 0'>" + chrome.i18n.getMessage('initAUB') + "</h2><img style='margin-left:-1px;' width='851px' src='" + chrome.extension.getURL("search_bot.png") + "'/></div>");
-        if (getPointsForFreeUse()) {
-            recursiveSearch(1);
-        }
+        recursiveSearch(1);
     });
 
     $('#aubRun').click(function(){
