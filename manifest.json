@@ -1,0 +1,38 @@
+{
+    "name": "AdopteUnBot",
+    "version": "0.1",
+    "description": "Visit automaticaly all profils from Homepage !",
+    "icons": {
+    "16" : "adopte-logo.png",
+    "48" : "adopte-logo.png",
+    "128" : "adopte-logo.png"
+    },
+    "default_locale" : "fr",
+    "manifest_version": 2,
+
+    "content_scripts": [ {
+        "matches": [
+            "http://www.adopteunmec.com/*"
+        ],
+        "js": [
+            "jquery-2.0.2.min.js",
+            "background.js",
+            "jquery-timing.js"
+        ],
+        "css": [
+            "adopteunbot.css"
+        ]
+    }],
+
+    "permissions": [
+        "tabs",
+        "http://www.adopteunmec.com/*"
+    ],
+
+    "web_accessible_resources": [
+        "green-icon.png",
+        "jquery-2.0.3.min.map",
+        "search_bot.png",
+        "search_top.png"
+    ]
+}
