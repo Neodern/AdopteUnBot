@@ -123,10 +123,8 @@ function buttonAubEvent() {
     });
 
     $('#aubRun').click(function(){
-        if (getPointsForFreeUse()) {
-            $('#aubRun').html("<span class='left'><span class='content'><span class='picto'></span>Lancement d'AuB...</span></span>");
-            window.location = "http://www.adopteunmec.com/index";
-        }
+        $('#aubRun').html("<span class='left'><span class='content'><span class='picto'></span>Lancement d'AuB...</span></span>");
+        window.location = "http://www.adopteunmec.com/index";
     });
 }
 

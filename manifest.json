@@ -1,38 +1,37 @@
 {
     "name": "AdopteUnBot",
-    "version": "0.1",
-    "description": "Visit automaticaly all profils from Homepage !",
+    "version": "0.1.1",
+    "description": "Visit automaticaly all profils from Homepage & research !",
     "icons": {
-    "16" : "adopte-logo.png",
-    "48" : "adopte-logo.png",
-    "128" : "adopte-logo.png"
+    "16" : "medias/images/adopte-logo.png",
+    "48" : "medias/images/adopte-logo.png",
+    "128" : "medias/images/adopte-logo.png"
     },
-    "default_locale" : "fr",
     "manifest_version": 2,
 
     "content_scripts": [ {
         "matches": [
-            "http://www.adopteunmec.com/*"
+            "*://www.adopteunmec.com/*"
         ],
         "js": [
-            "jquery-2.0.2.min.js",
-            "background.js",
-            "jquery-timing.js"
+            "medias/jQuery/jquery-2.0.2.min.js",
+            "aub.js",
+            "medias/jQuery/jquery-timing.js"
         ],
         "css": [
-            "adopteunbot.css"
+            "medias/css/adopteunbot.css"
         ]
     }],
 
     "permissions": [
         "tabs",
-        "http://www.adopteunmec.com/*"
+        "*://www.adopteunmec.com/*"
     ],
 
     "web_accessible_resources": [
-        "green-icon.png",
-        "jquery-2.0.3.min.map",
-        "search_bot.png",
-        "search_top.png"
+        "medias/jQuery/jquery-2.0.3.min.map",
+        "medias/images/green-icon.png",
+        "medias/images/search_bot.png",
+        "medias/images/search_top.png"
     ]
 }
