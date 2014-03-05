@@ -6,9 +6,5 @@
     "initAUB":{
         "message": "Initialisation d'Adopte Un Bot, Veuillez patienter ...",
         "description": "texte s'affichant au lancement d'AUB."
-    },
-    "errorPoints":{
-        "message":"La version d'essai AdopteUnBot Chrome est expirée<br />AdopteUnBot vous plait ? Alors n'hésitez pas à suivre ce lien pour pouvoir continuer à l'utiliser.<br /><a href='http://www.adopteunbot.com'>www.adopteunbot.com</a>",
-        "description":"Message s'affichant quand la version free est terminée."
     }
 }

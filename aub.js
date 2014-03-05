@@ -44,7 +44,6 @@ function goToProfil(personClass) {
                     $('#area-products').after(aubBackground.append(aubInit));
                 else
                     $aub.text("Veuillez patienter...");
-
             }
         }
     });
