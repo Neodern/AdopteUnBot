@@ -9,6 +9,7 @@
 var aubBackground = $('<div>', {id:"aubBackground"});
 var aubInit = $('<h2>', {id:"aub"}).text(chrome.i18n.getMessage('initAUB'));
 var image = chrome.extension.getURL("medias/images/green-icon.png");
+var visited = $("<img>", {class: "visited", src: image});
 
 /**
  *
@@ -35,7 +36,7 @@ function goToProfil(personClass) {
                         $aubLink.attr('href', url);
                         $aubLink.text(name);
                     }
-                    $this.find('.pic').append($("<img>", {class: "alreadyVisited", src: image}));
+                    $this.find('.pic').append(visited);
                 });
             }
             else
@@ -49,6 +50,9 @@ function goToProfil(personClass) {
     });
 }
 
+/**
+ *
+ */
 function buttonAubEvent() {
 
     var botMembers = [];
