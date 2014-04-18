@@ -6,15 +6,12 @@
  */
 
 
-var aubBackground = $('<div>', {id:"aubBackground"});
-var aubInit = $('<h2>', {id:"aub"}).text(chrome.i18n.getMessage('initAUB'));
-var image = chrome.extension.getURL("medias/images/green-icon.png");
-
 /**
  *
  * @param personClass
  */
 function goToProfil(personClass) {
+    var image = chrome.extension.getURL("green-icon.png");
 
     $('.'+personClass).each($).wait(5000, function(){
         var $this = $(this);
@@ -35,13 +32,13 @@ function goToProfil(personClass) {
                         $aubLink.attr('href', url);
                         $aubLink.text(name);
                     }
-                    $this.find('.pic').append($("<img>", {class: "alreadyVisited", src: image}));
+                    $this.find('.pic').append('<img width="9px" style="position:absolute;left:5px;bottom:2px" src="'+image+'"/>');
                 });
             }
             else
             {
                 if ($aub.length === 0)
-                    $('#area-products').after(aubBackground.append(aubInit));
+                    $('#area-products').after("<div style='margin-top:10px;background-color:black;'><h2 id='aub' style='text-align:center;border:none;font-family: Novecento Narrow Demibold;color:white;font-size:14px;padding:5px 0'>" + chrome.i18n.getMessage('initAUB') + "</h2></div>");
                 else
                     $aub.text("Veuillez patienter...");
             }
@@ -131,6 +128,8 @@ function buttonAubEvent() {
     });
 }
 
+$(document).ready(function() {
+
     if (document.URL.indexOf('http://www.adopteunmec.com/mySearch') !== -1)
     {
         $('.nav-pager.top').prepend('<a id="aubSearchRun" class="action modify-search"><span class="left"><span class="content"><span>Adopte Un Bot</span></span></span></a>');
@@ -155,3 +154,4 @@ function buttonAubEvent() {
         });
     }
     buttonAubEvent();
+});

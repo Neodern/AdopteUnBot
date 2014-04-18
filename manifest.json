@@ -8,15 +8,15 @@
     "128" : "medias/images/adopte-logo.png"
     },
     "manifest_version": 2,
-    "default_locale": "fr",
+
     "content_scripts": [ {
         "matches": [
             "*://www.adopteunmec.com/*"
         ],
         "js": [
             "medias/jQuery/jquery-2.0.2.min.js",
-            "medias/jQuery/jquery-timing.js",
-            "aub.js"
+            "aub.js",
+            "medias/jQuery/jquery-timing.js"
         ],
         "css": [
             "medias/css/adopteunbot.css"
