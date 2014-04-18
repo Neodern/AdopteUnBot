@@ -11,9 +11,21 @@
  * @param personClass
  */
 function goToProfil(personClass) {
-    var image = chrome.extension.getURL("green-icon.png");
+    var image = chrome.extension.getURL("medias/images/green-icon.png");
 
     $('.'+personClass).each($).wait(5000, function(){
+        if (localStorage.getItem("AuB") === "null")
+        {
+            $('#aub').html("");
+            $('#aubSearch').html("");
+            $('#area-products').after(
+                    '<a style="margin-top:10px" class="btn small-radius charm" id="aubRun"><span class="left"><span class="content"><span class="picto"></span>Adopte un Bot</span></span></a>' +
+                    '<a style="margin-top:10px" class="btn small-radius charm" id="aubSearchRun"><span class="left"><span class="content"><span class="picto"></span>Adopte un Bot - Search</span></span></a>'
+            );
+            return;
+        }
+
+
         var $this = $(this);
         var $aub = $('#aub');
         if (!$this.hasClass('home-feed'))
@@ -45,8 +57,6 @@ function goToProfil(personClass) {
         }
     });
 }
-
-function buttonAubEvent() {
 
     var botMembers = [];
     var recursiveSearch = function(page) {
@@ -99,7 +109,7 @@ function buttonAubEvent() {
                                     '<h4>'+ botMembers[i].pseudo +'</h4>' +
                                 '</a>' +
                             '</div><br /><br />' +
-                            '<a style="margin:0 auto;width:60px;font-size: 11px;color:white;" href="http://www.adopteunmec.com/">Quitter <span style="color:#fc8bb1;">AuB</span> :(</a>'
+                            '<a style="margin:0 auto;width:60px;font-size: 11px;color:white;" class="leaveAuB">Quitter <span style="color:#fc8bb1;">AuB</span> :(</a>'
                         );
                     }
                 });
@@ -110,42 +120,52 @@ function buttonAubEvent() {
                 clearInterval(profil);
                 $aub.html(
                     '<p>Tous les profils ont été visité !</p>'+
-                    '<a style="margin:0 auto;width:60px;font-size: 11px;color:white;" href="http://www.adopteunmec.com/">Quitter <span style="color:#fc8bb1;">AuB</span> :(</a>'
+                    '<a style="margin:0 auto;width:60px;font-size: 11px;color:white;" class="leaveAuB">Quitter <span style="color:#fc8bb1;">AuB</span> :(</a>'
                 );
             }
         }, 8000);
     };
 
-    $('#aubSearchRun').click(function(){
-
-        $('#area-products').after("<div style='margin-top:10px;background-color:#191919;'><img style='margin-top:-2px;' src='" + chrome.extension.getURL("search_top.png") + "'/><h2 id='aub' style='margin-top:10px;text-align:center;border:none;font-family: Novecento Narrow Demibold;color:white;font-size:14px;padding:5px 0'>" + chrome.i18n.getMessage('initAUB') + "</h2><img style='margin-left:-1px;' width='851px' src='" + chrome.extension.getURL("search_bot.png") + "'/></div>");
-        recursiveSearch(1);
-    });
-
-    $('#aubRun').click(function(){
-        $('#aubRun').html("<span class='left'><span class='content'><span class='picto'></span>Lancement d'AuB...</span></span>");
-        window.location = "http://www.adopteunmec.com/index";
-    });
-}
 
 $(document).ready(function() {
 
-    if (document.URL.indexOf('http://www.adopteunmec.com/mySearch') !== -1)
+    $('#aubSearchRun').click(function(){
+        localStorage.setItem("AuB", "Search");
+        $('#area-products').after("<div class='aubSearch' style='margin-top:10px;background-color:#191919;'><img style='margin-top:-2px;' src='" + chrome.extension.getURL("search_top.png") + "'/><h2 id='aub' style='margin-top:10px;text-align:center;border:none;font-family: Novecento Narrow Demibold;color:white;font-size:14px;padding:5px 0'>" + chrome.i18n.getMessage('initAUB') + "</h2><img style='margin-left:-1px;' width='851px' src='" + chrome.extension.getURL("search_bot.png") + "'/></div>");
+        recursiveSearch(1);
+    });
+
+    $('#aubRun').click(function() {
+        localStorage.setItem("AuB", "Home");
+        $('#aubRun').html("<span class='left'><span class='content'><span class='picto'></span>Lancement d'AuB...</span></span>");
+        window.location = "http://www.adopteunmec.com/home";
+    });
+
+    $('.leaveAuB').click(function(e) {
+        console.log("LeaveAUB Batard !")
+        e.preventDefault();
+        e.stopPropagation();
+        localStorage.removeItem("AuB");
+    });
+
+    var status = localStorage.getItem("AuB");
+
+    if (status === "Search")
     {
         $('.nav-pager.top').prepend('<a id="aubSearchRun" class="action modify-search"><span class="left"><span class="content"><span>Adopte Un Bot</span></span></span></a>');
     }
-    else if (document.URL == 'http://www.adopteunmec.com/')
+    else if (status === "null")
     {
         $('#area-products').after(
             '<a style="margin-top:10px" class="btn small-radius charm" id="aubRun"><span class="left"><span class="content"><span class="picto"></span>Adopte un Bot</span></span></a>' +
             '<a style="margin-top:10px" class="btn small-radius charm" id="aubSearchRun"><span class="left"><span class="content"><span class="picto"></span>Adopte un Bot - Search</span></span></a>'
         );
     }
-    else if (document.URL == 'http://www.adopteunmec.com/index')
+    else if (status === "Home")
     {
         $('#area-products').wait(5000, function(){
             $(this).after(
-                '<a style="float:right;margin-top:-35px;margin-right:10px;font-size: 11px;color:white;" href="http://www.adopteunmec.com/">Quitter <span style="color:#fc8bb1;">AuB</span> :(</a>'
+                '<a style="float:right;margin-top:-35px;margin-right:10px;font-size: 11px;color:white;" class="leaveAuB">Quitter <span style="color:#fc8bb1;">AuB</span> :(</a>'
             );
         });
         goToProfil('person');
@@ -153,5 +173,4 @@ $(document).ready(function() {
             location.reload();
         });
     }
-    buttonAubEvent();
 });

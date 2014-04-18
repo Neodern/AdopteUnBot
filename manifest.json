@@ -8,7 +8,7 @@
     "128" : "medias/images/adopte-logo.png"
     },
     "manifest_version": 2,
-
+    "default_locale": "fr",
     "content_scripts": [ {
         "matches": [
             "*://www.adopteunmec.com/*"
