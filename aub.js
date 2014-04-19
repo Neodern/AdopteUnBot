@@ -141,9 +141,9 @@ $(document).ready(function() {
             break;
         case null:
             $('#area-products').after(
-                '<nav class="navbar">' +
+                '<nav id="navbarAuB" class="navbar">' +
                     '<ul class="overview">' +
-                        '<li id="basket"><a href="https://github.com/Neodern/AdopteUnBot"><span>Adopte un Bot</span></a></li>' +
+                        '<li id="basket"><a href="https://github.com/Neodern/AdopteUnBot"><span id="logoAuB">Adopte un <span>Bot</span></span></a></li>' +
                     '</ul>' +
                     '<ul class="shortcuts columns-2">' +
                         '<li id="search"><a id="aubRun">Lancer AuB</a></li>' +

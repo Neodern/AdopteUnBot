@@ -34,3 +34,18 @@
     font-size: 14px;
     padding: 5px 0;
 }
+
+#logoAuB {
+    color: #fff;
+    display: inline-block;
+    line-height: 30px;
+    font-family: "Novecento Narrow Demibold";
+}
+
+#logoAuB span {
+    color: #ff0199;
+}
+
+#navbarAuB ul.overview{
+    margin-left: 15px;
+}
