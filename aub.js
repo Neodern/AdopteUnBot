@@ -14,17 +14,6 @@ function goToProfil(personClass) {
     var image = chrome.extension.getURL("medias/images/green-icon.png");
 
     $('.'+personClass).each($).wait(5000, function(){
-        if (localStorage.getItem("AuB") === "null")
-        {
-            $('#aub').html("");
-            $('#aubSearch').html("");
-            $('#area-products').after(
-                    '<a style="margin-top:10px" class="btn small-radius charm" id="aubRun"><span class="left"><span class="content"><span class="picto"></span>Adopte un Bot</span></span></a>' +
-                    '<a style="margin-top:10px" class="btn small-radius charm" id="aubSearchRun"><span class="left"><span class="content"><span class="picto"></span>Adopte un Bot - Search</span></span></a>'
-            );
-            return;
-        }
-
 
         var $this = $(this);
         var $aub = $('#aub');
@@ -50,7 +39,7 @@ function goToProfil(personClass) {
             else
             {
                 if ($aub.length === 0)
-                    $('#area-products').after("<div style='margin-top:10px;background-color:black;'><h2 id='aub' style='text-align:center;border:none;font-family: Novecento Narrow Demibold;color:white;font-size:14px;padding:5px 0'>" + chrome.i18n.getMessage('initAUB') + "</h2></div>");
+                    $('#area-products').after("<div id='aubBackground'><h2 id='aub' style='text-align:center;border:none;font-family: Novecento Narrow Demibold;color:white;font-size:14px;padding:5px 0'>" + chrome.i18n.getMessage('initAUB') + "</h2></div>");
                 else
                     $aub.text("Veuillez patienter...");
             }
@@ -129,40 +118,51 @@ function goToProfil(personClass) {
 
 $(document).ready(function() {
 
-    $('#aubSearchRun').click(function(){
+
+    var status = localStorage.getItem("AuB");
+
+    switch (status)
+    {
+        case "Search":
+            $('.nav-pager.top').prepend('<a id="aubSearchRun" class="action modify-search"><span class="left"><span class="content"><span>Adopte Un Bot</span></span></span></a>');
+
+            break;
+        case "Home":
+            $('#area-products').wait(5000, function(){
+                $(this).after(
+                    '<a style="float:right;margin-top:-35px;margin-right:10px;font-size: 11px;color:white;" class="leaveAuB">Quitter <span style="color:#fc8bb1;">AuB</span> :(</a>'
+                );
+            });
+            goToProfil('person');
+            $.wait(1000000, function(){
+                location.reload();
+            });
+
+            break;
+        case null:
+            $('#area-products').after(
+                    '<a style="margin-top:10px" class="btn small-radius charm" id="aubRun"><span class="left"><span class="content"><span class="picto"></span>Adopte un Bot</span></span></a>' +
+                    '<a style="margin-left:10px;margin-top:10px" class="btn small-radius charm" id="aubSearchRun"><span class="left"><span class="content"><span class="picto"></span>Adopte un Bot - Search</span></span></a>'
+            );
+
+            break;
+        default:
+            console.log(status);
+
+            break;
+    }
+
+    $(document).on('click', '#aubSearchRun', function(){
         localStorage.setItem("AuB", "Search");
         $('#area-products').after("<div class='aubSearch' style='margin-top:10px;background-color:#191919;'><img style='margin-top:-2px;' src='" + chrome.extension.getURL("search_top.png") + "'/><h2 id='aub' style='margin-top:10px;text-align:center;border:none;font-family: Novecento Narrow Demibold;color:white;font-size:14px;padding:5px 0'>" + chrome.i18n.getMessage('initAUB') + "</h2><img style='margin-left:-1px;' width='851px' src='" + chrome.extension.getURL("search_bot.png") + "'/></div>");
         recursiveSearch(1);
     });
 
-    $('#aubRun').click(function() {
+    $(document).on('click', '#aubRun', function() {
         localStorage.setItem("AuB", "Home");
-        $('#aubRun').html("<span class='left'><span class='content'><span class='picto'></span>Lancement d'AuB...</span></span>");
-        window.location = "http://www.adopteunmec.com/home";
-    });
+        $('#aubRun').remove();
+        $('#aubSearchRun').remove();
 
-    $('.leaveAuB').click(function(e) {
-        console.log("LeaveAUB Batard !")
-        e.preventDefault();
-        e.stopPropagation();
-        localStorage.removeItem("AuB");
-    });
-
-    var status = localStorage.getItem("AuB");
-
-    if (status === "Search")
-    {
-        $('.nav-pager.top').prepend('<a id="aubSearchRun" class="action modify-search"><span class="left"><span class="content"><span>Adopte Un Bot</span></span></span></a>');
-    }
-    else if (status === "null")
-    {
-        $('#area-products').after(
-            '<a style="margin-top:10px" class="btn small-radius charm" id="aubRun"><span class="left"><span class="content"><span class="picto"></span>Adopte un Bot</span></span></a>' +
-            '<a style="margin-top:10px" class="btn small-radius charm" id="aubSearchRun"><span class="left"><span class="content"><span class="picto"></span>Adopte un Bot - Search</span></span></a>'
-        );
-    }
-    else if (status === "Home")
-    {
         $('#area-products').wait(5000, function(){
             $(this).after(
                 '<a style="float:right;margin-top:-35px;margin-right:10px;font-size: 11px;color:white;" class="leaveAuB">Quitter <span style="color:#fc8bb1;">AuB</span> :(</a>'
@@ -172,5 +172,12 @@ $(document).ready(function() {
         $.wait(1000000, function(){
             location.reload();
         });
-    }
+
+    });
+
+    $(document).on('click', '.leaveAuB', function(e) {
+        localStorage.removeItem("AuB");
+        location.reload();
+    });
+
 });
