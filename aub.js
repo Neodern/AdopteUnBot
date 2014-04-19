@@ -39,7 +39,7 @@ function goToProfil(personClass) {
             else
             {
                 if ($aub.length === 0)
-                    $('#area-products').after("<div id='aubBackground'><h2 id='aub' style='text-align:center;border:none;font-family: Novecento Narrow Demibold;color:white;font-size:14px;padding:5px 0'>" + chrome.i18n.getMessage('initAUB') + "</h2></div>");
+                    $('#area-products').after("<div id='aubBackground'><h2 id='aub'>" + chrome.i18n.getMessage('initAUB') + "</h2></div>");
                 else
                     $aub.text("Veuillez patienter...");
             }
@@ -141,8 +141,15 @@ $(document).ready(function() {
             break;
         case null:
             $('#area-products').after(
-                    '<a style="margin-top:10px" class="btn small-radius charm" id="aubRun"><span class="left"><span class="content"><span class="picto"></span>Adopte un Bot</span></span></a>' +
-                    '<a style="margin-left:10px;margin-top:10px" class="btn small-radius charm" id="aubSearchRun"><span class="left"><span class="content"><span class="picto"></span>Adopte un Bot - Search</span></span></a>'
+                '<nav class="navbar">' +
+                    '<ul class="overview">' +
+                        '<li id="basket"><a href="https://github.com/Neodern/AdopteUnBot"><span>Adopte un Bot</span></a></li>' +
+                    '</ul>' +
+                    '<ul class="shortcuts columns-2">' +
+                        '<li id="search"><a id="aubRun">Lancer AuB</a></li>' +
+                        '<li id="my-page"><a id="aubSearchRun">Lancer AuB Search</a></li>' +
+                    '</ul>'+
+                '</nav>'
             );
 
             break;

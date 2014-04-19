@@ -26,3 +26,11 @@
     background-color:black;
 }
 
+#aubBackground #aub {
+    text-align: center;
+    border: none;
+    font-family: Novecento Narrow Demibold;
+    color: white;
+    font-size: 14px;
+    padding: 5px 0;
+}
