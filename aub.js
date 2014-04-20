@@ -26,7 +26,7 @@ function goToProfil(personClass) {
             {
                 $.get(url, function(){
                     if ($aub.text().indexOf('Veuillez') !== -1)
-                        $aub.html('Adopte un Bot a visité le profil de <a id="aubLink" href="'+url+'">'+name+'</a>.');
+                        $aub.html('Adopte un Bot a visité le profil de <a id="aubLink" target="_blank" href="'+url+'">'+name+'</a>.');
                     else
                     {
                         var $aubLink = $('#aubLink');
@@ -39,7 +39,7 @@ function goToProfil(personClass) {
             else
             {
                 if ($aub.length === 0)
-                    $('#area-products').after("<div id='aubBackground'><h2 id='aub'>" + chrome.i18n.getMessage('initAUB') + "</h2></div>");
+                    $('#sectionAuB').html("<span id='aub'>" + chrome.i18n.getMessage('initAUB') + "</span>");
                 else
                     $aub.text("Veuillez patienter...");
             }
@@ -98,7 +98,7 @@ function goToProfil(personClass) {
                                     '<h4>'+ botMembers[i].pseudo +'</h4>' +
                                 '</a>' +
                             '</div><br /><br />' +
-                            '<a style="margin:0 auto;width:60px;font-size: 11px;color:white;" class="leaveAuB">Quitter <span style="color:#fc8bb1;">AuB</span> :(</a>'
+                            '<a class="leaveAuB">Quitter <span>AuB</span> :(</a>'
                         );
                     }
                 });
@@ -109,18 +109,30 @@ function goToProfil(personClass) {
                 clearInterval(profil);
                 $aub.html(
                     '<p>Tous les profils ont été visité !</p>'+
-                    '<a style="margin:0 auto;width:60px;font-size: 11px;color:white;" class="leaveAuB">Quitter <span style="color:#fc8bb1;">AuB</span> :(</a>'
+                    '<a class="leaveAuB">Quitter <span>AuB</span> :(</a>'
                 );
             }
         }, 8000);
     };
 
+    var navbarAuB =
+        '<nav id="navbarAuB" class="navbar">' +
+            '<ul class="overview">' +
+                '<li id="basket"><a target="_blank" href="https://github.com/Neodern/AdopteUnBot"><span id="logoAuB">Adopte un <span>Bot</span></span></a></li>' +
+            '</ul>' +
+            '<section id="sectionAuB">' +
+                '<ul class="shortcuts columns-2">' +
+                    '<li id="search"><a id="aubRun">Lancer AuB</a></li>' +
+                    '<li id="my-page"><a id="aubSearchRun">Lancer AuB Search</a></li>' +
+                '</ul>' +
+            '</section>' +
+            '<section id="leaveAuB"></section>' +
+        '</nav>';
+
 
 $(document).ready(function() {
 
-
     var status = localStorage.getItem("AuB");
-
     switch (status)
     {
         case "Search":
@@ -128,9 +140,13 @@ $(document).ready(function() {
 
             break;
         case "Home":
-            $('#area-products').wait(5000, function(){
-                $(this).after(
-                    '<a style="float:right;margin-top:-35px;margin-right:10px;font-size: 11px;color:white;" class="leaveAuB">Quitter <span style="color:#fc8bb1;">AuB</span> :(</a>'
+            $('#area-products').wait(5000, function() {
+                if (! $("#navbarAuB").length)
+                {
+                    $("#area-products").after(navbarAuB);
+                }
+                $('#leaveAuB').html(
+                    '<a class="leaveAuB">Quitter <span>AuB</span> :(</a>'
                 );
             });
             goToProfil('person');
@@ -140,17 +156,7 @@ $(document).ready(function() {
 
             break;
         case null:
-            $('#area-products').after(
-                '<nav id="navbarAuB" class="navbar">' +
-                    '<ul class="overview">' +
-                        '<li id="basket"><a href="https://github.com/Neodern/AdopteUnBot"><span id="logoAuB">Adopte un <span>Bot</span></span></a></li>' +
-                    '</ul>' +
-                    '<ul class="shortcuts columns-2">' +
-                        '<li id="search"><a id="aubRun">Lancer AuB</a></li>' +
-                        '<li id="my-page"><a id="aubSearchRun">Lancer AuB Search</a></li>' +
-                    '</ul>'+
-                '</nav>'
-            );
+            $('#area-products').after(navbarAuB);
 
             break;
         default:
@@ -167,14 +173,9 @@ $(document).ready(function() {
 
     $(document).on('click', '#aubRun', function() {
         localStorage.setItem("AuB", "Home");
-        $('#aubRun').remove();
-        $('#aubSearchRun').remove();
+        $('#sectionAuB').html("<span id='aub'>" + chrome.i18n.getMessage('initAUB') + "</span>");
+        $("#leaveAuB").html('<ul class="overview"><li><a class="leaveAuB">Quitter <span>AuB</span> :(</a></li></ul>');
 
-        $('#area-products').wait(5000, function(){
-            $(this).after(
-                '<a style="float:right;margin-top:-35px;margin-right:10px;font-size: 11px;color:white;" class="leaveAuB">Quitter <span style="color:#fc8bb1;">AuB</span> :(</a>'
-            );
-        });
         goToProfil('person');
         $.wait(1000000, function(){
             location.reload();
