@@ -33,7 +33,7 @@ function goToProfil(personClass) {
                         $aubLink.attr('href', url);
                         $aubLink.text(name);
                     }
-                    $this.find('.pic').append('<img width="9px" style="position:absolute;left:5px;bottom:2px" src="'+image+'"/>');
+                    $this.find('.pic').append('<img class="visitedDot" width="9px" src="'+image+'"/>');
                 });
             }
             else

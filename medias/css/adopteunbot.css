@@ -100,3 +100,9 @@
     padding: 0;
     color: #fc8bb1;
 }
+
+.visitedDot {
+    position: absolute;
+    left: 5px;
+    bottom: 2px;
+}
