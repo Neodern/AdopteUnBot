@@ -25,14 +25,7 @@ function goToProfil(personClass) {
             if (url && url != '' && favicon != '')
             {
                 $.get(url, function(){
-                    if ($aub.text().indexOf('Veuillez') !== -1)
-                        $aub.html('Adopte un Bot a visité le profil de <a id="aubLink" target="_blank" href="'+url+'">'+name+'</a>.');
-                    else
-                    {
-                        var $aubLink = $('#aubLink');
-                        $aubLink.attr('href', url);
-                        $aubLink.text(name);
-                    }
+                    $aub.html('Adopte un Bot a visité le profil de <a id="aubLink" target="_blank" href="'+url+'">'+name+'</a>.');
                     $this.find('.pic').append('<img class="visitedDot" width="9px" src="'+image+'"/>');
                 });
             }
