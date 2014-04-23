@@ -65,17 +65,18 @@
 
 #leaveAuB {
     float: right;
-    margin-right: 10px;
     font-size: 11px;
     border-left: 1px solid #fff;
+    padding: 0;
 }
 
 #leaveAuB a {
     background:none;
+    color: white;
 }
 
 #leaveAuB a span {
-    color:#fc8bb1;
+    color:#fe57a1;
 }
 
 #sectionAuB {
