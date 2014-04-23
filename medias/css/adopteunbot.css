@@ -54,10 +54,14 @@
     font-family: 'Novecento Narrow Demibold';
 }
 
-#navbarAuB ul:first-child {
-    margin-left: 40px;
-    width: 175px;
+#navbarAuB ul {
+    width: auto;
 }
+
+#navbarAuB ul li {
+    padding: 0 15px;
+}
+
 
 #leaveAuB {
     float: right;
