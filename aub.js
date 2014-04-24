@@ -126,6 +126,8 @@ function goToProfil(personClass) {
 $(document).ready(function() {
 
     var status = localStorage.getItem("AuB");
+    if (document.URL !== "http://www.adopteunmec.com/home")
+        return;
     switch (status)
     {
         case "Search":
