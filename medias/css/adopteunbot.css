@@ -106,3 +106,25 @@
     left: 5px;
     bottom: 2px;
 }
+
+/*
+** AuB Search
+*/
+
+.aubSearch {
+    margin-top: 10px;
+    background-color: #191919;
+}
+
+.aubSearch img:first-child {
+    margin-top: -5px;
+}
+
+.aubSearchBotImg {
+    margin-left: -1px;
+    width: 851px;
+}
+
+.aubSearch h2 {
+
+}

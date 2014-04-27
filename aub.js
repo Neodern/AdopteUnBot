@@ -14,11 +14,13 @@ function goToProfil(personClass) {
     var image = chrome.extension.getURL("medias/images/green-icon.png");
 
     $('.'+personClass).each($).wait(5000, function(){
+        // Todo : Gérer cette section (Home) avec l'âge de la personne.
+        var $this = $(this),
+            $aub = $('#aub');
 
-        var $this = $(this);
-        var $aub = $('#aub');
         if (!$this.hasClass('home-feed'))
         {
+            var id = $this.attr("data-id");
             var url = $this.find('a').first().attr('href');
             var name = $this.find('h4').text();
             var favicon = $this.find('.favicon').html();
@@ -69,12 +71,16 @@ function goToProfil(personClass) {
     };
 
     var visitAllSearchProfiles = function(botMembers) {
-        var i = 0;
-        var l = botMembers.length;
-        var $aub = $('#aub');
+        var i = 0,
+            l = botMembers.length,
+            $aub = $('#aub');
+
         var profil = setInterval(function(){
             if (i < l)
             {
+                // TODO : Regarder les informations qu'ils seraient utiles d'afficher.
+                // TODO : Afficher que le pseudo ? Avec la photo au passage de la souris. (Voir Eperflex)
+
                 $.ajax({
                     type: 'GET',
                     url: 'http://www.adopteunmec.com' + botMembers[i].url,
@@ -126,16 +132,25 @@ function goToProfil(personClass) {
 $(document).ready(function() {
 
     var status = localStorage.getItem("AuB");
+    console.log(status);
     if (document.URL !== "http://www.adopteunmec.com/home")
         return;
     switch (status)
     {
         case "Search":
-            $('.nav-pager.top').prepend('<a id="aubSearchRun" class="action modify-search"><span class="left"><span class="content"><span>Adopte Un Bot</span></span></span></a>');
+            $('#area-products').after(
+                    '<div class="aubSearch">' +
+                        '<img src="' + chrome.extension.getURL("medias/images/search_top.png") + '"/>' +
+                        '<h2 id="aub">' + chrome.i18n.getMessage('initAUB') + "</h2>" +
+                        '<img id="aubSearchBotImg" src="' + chrome.extension.getURL("medias/images/search_bot.png") + '"/>' +
+                    '</div>'
+            );
+            recursiveSearch(1);
 
             break;
         case "Home":
-            $('#area-products').wait(5000, function() {
+            console.log('case home.');
+            $('#area-products').wait(3000, function() {
                 if (! $("#navbarAuB").length)
                 {
                     $("#area-products").after(navbarAuB);
@@ -162,7 +177,13 @@ $(document).ready(function() {
 
     $(document).on('click', '#aubSearchRun', function(){
         localStorage.setItem("AuB", "Search");
-        $('#area-products').after("<div class='aubSearch' style='margin-top:10px;background-color:#191919;'><img style='margin-top:-2px;' src='" + chrome.extension.getURL("search_top.png") + "'/><h2 id='aub' style='margin-top:10px;text-align:center;border:none;font-family: Novecento Narrow Demibold;color:white;font-size:14px;padding:5px 0'>" + chrome.i18n.getMessage('initAUB') + "</h2><img style='margin-left:-1px;' width='851px' src='" + chrome.extension.getURL("search_bot.png") + "'/></div>");
+        $('#area-products').after(
+            '<div class="aubSearch">' +
+                '<img src="' + chrome.extension.getURL("medias/images/search_top.png") + '"/>' +
+                '<h2 id="aub">' + chrome.i18n.getMessage('initAUB') + "</h2>" +
+                '<img src="' + chrome.extension.getURL("medias/images/search_bot.png") + '"/>' +
+            '</div>'
+        );
         recursiveSearch(1);
     });
 
