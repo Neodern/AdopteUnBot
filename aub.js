@@ -5,7 +5,6 @@
  * @about: Visitez automatiquement des profils et gagnez de la popularité sur AdopteUnMec.
  */
 
-
 /**
  *
  * @param personClass
@@ -113,6 +112,7 @@ function goToProfil(personClass) {
             '<section id="leaveAuB"></section>' +
         '</nav>';
 
+    var leaveAuB = '<ul class="overview"><li><a class="leaveAuB">Quitter <span>AuB</span> :(</a></li></ul>';
 
 $(document).ready(function() {
 
@@ -123,23 +123,20 @@ $(document).ready(function() {
 
     $('#area-products').wait(3000, function() {
         $("#area-products").after(navbarAuB);
-        $('#leaveAuB').html(
-            '<a class="leaveAuB">Quitter <span>AuB</span> :(</a>'
-        );
     });
 
     switch (status)
     {
         case "Search":
             $('#sectionAuB').html("<span id='aub'>" + chrome.i18n.getMessage('initAUB') + "</span>");
-            $("#leaveAuB").html('<ul class="overview"><li><a class="leaveAuB">Quitter <span>AuB</span> :(</a></li></ul>');
+            $("#leaveAuB").html(leaveAuB);
 
             recursiveSearch(1);
 
             break;
         case "Home":
             $('#sectionAuB').html("<span id='aub'>" + chrome.i18n.getMessage('initAUB') + "</span>");
-            $("#leaveAuB").html('<ul class="overview"><li><a class="leaveAuB">Quitter <span>AuB</span> :(</a></li></ul>');
+            $("#leaveAuB").html(leaveAuB);
 
             goToProfil('person');
             $.wait(1000000, function(){ location.reload(); });
@@ -156,14 +153,14 @@ $(document).ready(function() {
     $(document).on('click', '#aubSearchRun', function(){
         localStorage.setItem("AuB", "Search");
         $('#sectionAuB').html("<span id='aub'>" + chrome.i18n.getMessage('initAUB') + "</span>");
-        $("#leaveAuB").html('<ul class="overview"><li><a class="leaveAuB">Quitter <span>AuB</span> :(</a></li></ul>');
+        $("#leaveAuB").html(leaveAuB);
         recursiveSearch(1);
     });
 
     $(document).on('click', '#aubRun', function() {
         localStorage.setItem("AuB", "Home");
         $('#sectionAuB').html("<span id='aub'>" + chrome.i18n.getMessage('initAUB') + "</span>");
-        $("#leaveAuB").html('<ul class="overview"><li><a class="leaveAuB">Quitter <span>AuB</span> :(</a></li></ul>');
+        $("#leaveAuB").html(leaveAuB);
 
         goToProfil('person');
         $.wait(1000000, function(){ location.reload(); });
