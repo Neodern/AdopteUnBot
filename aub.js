@@ -9,43 +9,48 @@
  * todo : Add an icon / text for "Fork me on GitHub"
  */
 
-/**
- *
- * @param personClass
- */
-function goToProfil(personClass) {
-    var image = chrome.extension.getURL("medias/images/green-icon.png");
+    /**
+     *
+     * @param personClass
+     */
+    var goToProfil = function(personClass) {
+        var image = chrome.extension.getURL("medias/images/green-icon.png");
 
-    $('.'+personClass).each($).wait(5000, function(){
-        // Todo : Gérer cette section (Home) avec l'âge de la personne.
-        var $this = $(this),
-            $aub = $('#aub');
+        $('.'+personClass).each($).wait(5000, function(){
+            // Todo : Gérer cette section (Home) avec l'âge de la personne.
+            var $this = $(this),
+                $aub = $('#aub');
 
-        if (!$this.hasClass('home-feed'))
-        {
-            var id = $this.attr("data-id");
-            var url = $this.find('a').first().attr('href');
-            var name = $this.find('h4').text();
-            var favicon = $this.find('.favicon').html();
-            if (url && url != '' && favicon != '')
+            if (!$this.hasClass('home-feed'))
             {
-                $.get(url, function(){
-                    $aub.html('Adopte un Bot a visité le profil de <a id="aubLink" target="_blank" href="'+url+'">'+name+'</a>.');
-                    $this.find('.pic').append('<img class="visitedDot" width="9px" src="'+image+'"/>');
-                });
-            }
-            else
-            {
-                if ($aub.length === 0)
-                    $('#sectionAuB').html("<span id='aub'>" + chrome.i18n.getMessage('initAUB') + "</span>");
+                var id = $this.attr("data-id");
+                var url = $this.find('a').first().attr('href');
+                var name = $this.find('h4').text();
+                var favicon = $this.find('.favicon').html();
+                if (url && url != '' && favicon != '')
+                {
+                    $.get(url, function(){
+                        $aub.html('Adopte un Bot a visité le profil de <a id="aubLink" target="_blank" href="'+url+'">'+name+'</a>.');
+                        $this.find('.pic').append('<img class="visitedDot" width="9px" src="'+image+'"/>');
+                    });
+                }
                 else
-                    $aub.text("Veuillez patienter...");
+                {
+                    if ($aub.length === 0)
+                        $('#sectionAuB').html("<span id='aub'>" + chrome.i18n.getMessage('initAUB') + "</span>");
+                    else
+                        $aub.text("Veuillez patienter...");
+                }
             }
-        }
-    });
-}
+        });
+    }
 
     var botMembers = [];
+
+    /**
+     *
+     * @param page
+     */
     var recursiveSearch = function(page) {
         var $aub = $('#aub');
         $.ajax({
@@ -73,6 +78,10 @@ function goToProfil(personClass) {
         });
     };
 
+    /**
+     *
+     * @param botMembers
+     */
     var visitAllSearchProfiles = function(botMembers) {
         var i = 0,
             l = botMembers.length,
@@ -102,6 +111,9 @@ function goToProfil(personClass) {
         }, 8000);
     };
 
+    /**
+     * Static HTML code.
+     */
     var navbarAuB =
         '<nav id="navbarAuB" class="navbar">' +
             '<ul class="overview">' +
@@ -117,6 +129,7 @@ function goToProfil(personClass) {
         '</nav>';
 
     var leaveAuB = '<ul class="overview"><li><a class="leaveAuB">Quitter <span>AuB</span> :(</a></li></ul>';
+
 
 $(document).ready(function() {
 
