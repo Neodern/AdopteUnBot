@@ -1,10 +1,14 @@
 {
-    "getSearchPages":{
+    "getSearchPages": {
         "message": "Récupération des profils en fonction de vos paramètres de recherche, veuillez patienter",
         "description": "Message au moment de la récupération des pages de résultats."
     },
-    "initAUB":{
+    "initAUB": {
         "message": "Initialisation d'Adopte Un Bot, Veuillez patienter ...",
         "description": "texte s'affichant au lancement d'AUB."
+    },
+    "AllProfilesVisited": {
+        "message": "Tous les profils ont été visité.",
+        "description" : "Message s'affichant quand tous les profils de la section recherche ont été visité."
     }
 }

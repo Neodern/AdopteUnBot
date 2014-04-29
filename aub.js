@@ -78,9 +78,6 @@ function goToProfil(personClass) {
         var profil = setInterval(function(){
             if (i < l)
             {
-                // TODO : Regarder les informations qu'ils seraient utiles d'afficher.
-                // TODO : Afficher que le pseudo ? Avec la photo au passage de la souris. (Voir Eperflex)
-
                 $.ajax({
                     type: 'GET',
                     url: 'http://www.adopteunmec.com' + botMembers[i].url,
@@ -88,16 +85,7 @@ function goToProfil(personClass) {
                         if (typeof botMembers[i].thumb == 'undefined')
                             botMembers[i].thumb = 'http://s.adopteunmec.com/fr/www/img/thumb2.jpg?0abd11afc5d29d244672a79b0ba7bc3e';
                         $aub.html(
-                            '<p style="margin-top:10px;">Adopte un Bot a visité le profil de</p>' +
-                            '<div class="person" style="width:66px;" data-id="15281598">' +
-                                '<a href="' + botMembers[i].url +'">' +
-                                    '<div>' +
-                                        '<img style="margin-left:1px;" src="'+ botMembers[i].thumb +'" alt="'+ botMembers[i].pseudo +'" width="64" height="64">' +
-                                    '</div>' +
-                                    '<h4>'+ botMembers[i].pseudo +'</h4>' +
-                                '</a>' +
-                            '</div><br /><br />' +
-                            '<a class="leaveAuB">Quitter <span>AuB</span> :(</a>'
+                            'Adopte un Bot a visité le profil de <a id="aubLink" target="_blank" href="'+botMembers[i].url+'">'+botMembers[i].pseudo+'</a>.'
                         );
                     }
                 });
@@ -106,10 +94,7 @@ function goToProfil(personClass) {
             else
             {
                 clearInterval(profil);
-                $aub.html(
-                    '<p>Tous les profils ont été visité !</p>'+
-                    '<a class="leaveAuB">Quitter <span>AuB</span> :(</a>'
-                );
+                $aub.html(chrome.i18n.getMessage('AllProfilesVisited'));
             }
         }, 8000);
     };
@@ -135,55 +120,43 @@ $(document).ready(function() {
     console.log(status);
     if (document.URL !== "http://www.adopteunmec.com/home")
         return;
+
+    $('#area-products').wait(3000, function() {
+        $("#area-products").after(navbarAuB);
+        $('#leaveAuB').html(
+            '<a class="leaveAuB">Quitter <span>AuB</span> :(</a>'
+        );
+    });
+
     switch (status)
     {
         case "Search":
-            $('#area-products').after(
-                    '<div class="aubSearch">' +
-                        '<img src="' + chrome.extension.getURL("medias/images/search_top.png") + '"/>' +
-                        '<h2 id="aub">' + chrome.i18n.getMessage('initAUB') + "</h2>" +
-                        '<img id="aubSearchBotImg" src="' + chrome.extension.getURL("medias/images/search_bot.png") + '"/>' +
-                    '</div>'
-            );
+            $('#sectionAuB').html("<span id='aub'>" + chrome.i18n.getMessage('initAUB') + "</span>");
+            $("#leaveAuB").html('<ul class="overview"><li><a class="leaveAuB">Quitter <span>AuB</span> :(</a></li></ul>');
+
             recursiveSearch(1);
 
             break;
         case "Home":
-            console.log('case home.');
-            $('#area-products').wait(3000, function() {
-                if (! $("#navbarAuB").length)
-                {
-                    $("#area-products").after(navbarAuB);
-                }
-                $('#leaveAuB').html(
-                    '<a class="leaveAuB">Quitter <span>AuB</span> :(</a>'
-                );
-            });
+            $('#sectionAuB').html("<span id='aub'>" + chrome.i18n.getMessage('initAUB') + "</span>");
+            $("#leaveAuB").html('<ul class="overview"><li><a class="leaveAuB">Quitter <span>AuB</span> :(</a></li></ul>');
+
             goToProfil('person');
-            $.wait(1000000, function(){
-                location.reload();
-            });
+            $.wait(1000000, function(){ location.reload(); });
 
             break;
         case null:
-            $('#area-products').after(navbarAuB);
 
             break;
         default:
-            console.log(status);
 
             break;
     }
 
     $(document).on('click', '#aubSearchRun', function(){
         localStorage.setItem("AuB", "Search");
-        $('#area-products').after(
-            '<div class="aubSearch">' +
-                '<img src="' + chrome.extension.getURL("medias/images/search_top.png") + '"/>' +
-                '<h2 id="aub">' + chrome.i18n.getMessage('initAUB') + "</h2>" +
-                '<img src="' + chrome.extension.getURL("medias/images/search_bot.png") + '"/>' +
-            '</div>'
-        );
+        $('#sectionAuB').html("<span id='aub'>" + chrome.i18n.getMessage('initAUB') + "</span>");
+        $("#leaveAuB").html('<ul class="overview"><li><a class="leaveAuB">Quitter <span>AuB</span> :(</a></li></ul>');
         recursiveSearch(1);
     });
 
@@ -193,15 +166,12 @@ $(document).ready(function() {
         $("#leaveAuB").html('<ul class="overview"><li><a class="leaveAuB">Quitter <span>AuB</span> :(</a></li></ul>');
 
         goToProfil('person');
-        $.wait(1000000, function(){
-            location.reload();
-        });
+        $.wait(1000000, function(){ location.reload(); });
 
     });
 
-    $(document).on('click', '.leaveAuB', function(e) {
+    $(document).on('click', '.leaveAuB', function() {
         localStorage.removeItem("AuB");
         location.reload();
     });
-
 });

@@ -1,39 +1,3 @@
-#aubDesign {
-    margin-top:10px;
-    background-color:#191919;
-}
-
-#aubDesignTop {
-    margin-top:-2px;
-}
-#aubDesignBot {
-    margin-left:-1px;
-    width:851px;
-}
-
-#aubDesign h2 {
-    margin-top:10px;
-    text-align:center;
-    border:none;
-    font-family: Novecento Narrow Demibold;
-    color:white;
-    font-size:14px;
-    padding:5px 0;
-}
-
-#aubBackground {
-    margin-top:10px;
-    background-color:black;
-}
-
-#aubBackground #aub {
-    text-align: center;
-    border: none;
-    font-family: Novecento Narrow Demibold;
-    color: white;
-    font-size: 14px;
-    padding: 5px 0;
-}
 
 #logoAuB {
     color: #fff;
@@ -105,26 +69,4 @@
     position: absolute;
     left: 5px;
     bottom: 2px;
-}
-
-/*
-** AuB Search
-*/
-
-.aubSearch {
-    margin-top: 10px;
-    background-color: #191919;
-}
-
-.aubSearch img:first-child {
-    margin-top: -5px;
-}
-
-.aubSearchBotImg {
-    margin-left: -1px;
-    width: 851px;
-}
-
-.aubSearch h2 {
-
 }
