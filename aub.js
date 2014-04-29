@@ -5,6 +5,10 @@
  * @about: Visitez automatiquement des profils et gagnez de la popularité sur AdopteUnMec.
  */
 
+/*
+ * todo : Add an icon / text for "Fork me on GitHub"
+ */
+
 /**
  *
  * @param personClass
