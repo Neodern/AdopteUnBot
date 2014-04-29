@@ -7,6 +7,8 @@
 
 /*
  * todo : Add an icon / text for "Fork me on GitHub"
+ * todo : remove all txt (initalition en fonction de vos paramètres bla bla bla)
+ * todo : Retirer l'attente de 3 secondes avant le chargement du bot ? J'ai l'impression que no-need.
  */
 
 /**
