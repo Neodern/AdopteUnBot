@@ -45,9 +45,11 @@ var goToProfil = function(personClass) {
             }
         }
     });
-}
+};
 
 var botMembers = [];
+
+var pageLength = 20;
 
 /**
  *
@@ -56,19 +58,20 @@ var botMembers = [];
 var recursiveSearch = function(page) {
     var $aub = $('#aub');
     $.ajax({
-        type:'GET',
-        url: 'http://www.adopteunmec.com/mySearch/ajax_loadPages',
+        type: 'GET',
+        url: 'https://www.adopteunmec.com/mySearch/more',
         data: {
-            page: page
+            count: pageLength,
+            offset: (page - 1) * pageLength
         },
         dataType: 'json',
         success: function(response) {
-            if (response.members.length === 0)
+            if (response.length === 0)
             {
                 visitAllSearchProfiles(botMembers);
                 return;
             }
-            botMembers = botMembers.concat(response.members);
+            botMembers = botMembers.concat(response);
             $.wait(1000, function() {
                 if (page === 1)
                     $aub.text(chrome.i18n.getMessage('getSearchPages'));
@@ -94,10 +97,10 @@ var visitAllSearchProfiles = function(botMembers) {
         {
             $.ajax({
                 type: 'GET',
-                url: 'http://www.adopteunmec.com' + botMembers[i].url,
+                url: 'https://www.adopteunmec.com' + botMembers[i].url,
                 success: function() {
                     if (typeof botMembers[i].thumb == 'undefined')
-                        botMembers[i].thumb = 'http://s.adopteunmec.com/fr/www/img/thumb2.jpg?0abd11afc5d29d244672a79b0ba7bc3e';
+                        botMembers[i].thumb = 'https://s.adopteunmec.com/fr/www/img/thumb2.jpg?0abd11afc5d29d244672a79b0ba7bc3e';
                     $aub.html(
                         'Adopte un Bot a visité le profil de <a id="aubLink" target="_blank" href="'+botMembers[i].url+'">'+botMembers[i].pseudo+'</a>.'
                     );
@@ -137,7 +140,7 @@ $(document).ready(function() {
 
     var status = localStorage.getItem("AuB");
     console.log(status);
-    if (document.URL !== "http://www.adopteunmec.com/home")
+    if (document.URL !== "https://www.adopteunmec.com/home")
         return;
 
     $('#area-products').wait(3000, function() {
